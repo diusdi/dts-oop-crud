@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
-using System.Xml.Linq;
 
 namespace BasicConnectivity;
 
@@ -8,72 +7,43 @@ public class Program
 {
     private static void Main()
     {
-        // REGION
-        // Region region = new Region();
-        // Menampilkan seluruh region
-        // region.GetAll();
-
-        // Menambahkan data region baru
-        // region.Insert("Jawa Utara");
-
-        // Menampilkan data region berdasarkan id
-        // region.GetById(1);
-
-        // Mengubah data region berdasarkan id
-        // region.Update(1, "Jawa Selatan");
-
-        // Menghapus data region berdasarkan id
-        // region.Delete(1);
-
-        // Location
-        // Location location = new Location();
-        // Menampilkan seluruh location
-        // location.GetAll();
-
-        // Menambahkan data location baru
-        // location.Insert("Malang", 5);
-
-        // Menampilkan data location berdasarkan id
-        // location.GetById(1);
-
-        // Mengubah data location berdasarkan id
-        // location.Update(1, "Batu");
-
-        // Menghapus data location berdasarkan id
-        // location.Delete(1);
-
-        // job
-        // job job = new job();
-        // Menampilkan seluruh job
-        // job.GetAll();
-
-        // Menambahkan data job baru
-        // job.Insert("Manajer");
-
-        // Menampilkan data job berdasarkan id
-        // job.GetById(1);
-
-        // Mengubah data job berdasarkan id
-        // job.Update(1, "Teknisi");
-
-        // Menghapus data job berdasarkan id
-        // job.Delete(1);
-
-        // country
-        // country country = new country();
-        // Menampilkan seluruh country
-        // country.GetAll();
-
-        // Menambahkan data country baru
-        // country.Insert("Malaysia");
-
-        // Menampilkan data country berdasarkan id
-        // country.GetById(1);
-
-        // Mengubah data country berdasarkan id
-        // country.Update(1, "Brunei");
-
-        // Menghapus data country berdasarkan id
-        // country.Delete(1);
+        var choice = true;
+        while (choice)
+        {
+            Console.WriteLine("1. List all regions");
+/*            Console.WriteLine("2. List all countries");
+            Console.WriteLine("3. List all locations");*/
+            Console.WriteLine("4. Exit");
+            Console.Write("Enter your choice: ");
+            var input = Console.ReadLine();
+            choice = Menu(input);
+        }
+    }
+    public static bool Menu(string? input)
+    {
+        switch (input)
+        {
+            case "1":
+                var region = new Region();
+                var regions = region.GetAll();
+                GeneralMenu.List(regions, "regions");
+                break;
+/*            case "2":
+                var country = new Country();
+                var countries = country.GetAll();
+                GeneralMenu.List(countries, "countries");
+                break;
+            case "3":
+                var location = new Location();
+                var locations = location.GetAll();
+                GeneralMenu.List(locations, "locations");
+                break;*/
+            case "4":
+                return false;
+            default:
+                Console.WriteLine("Invalid choice");
+                break;
+        }
+        return true;
     }
 }
