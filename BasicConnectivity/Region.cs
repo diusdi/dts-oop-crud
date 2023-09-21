@@ -8,11 +8,6 @@ public class Region
     public int? Id { get; set; }
     public string? Name { get; set; }
 
-    public override string ToString()
-    {
-        return $"{Id} - {Name}";
-    }
-
     public List<Region> GetAll()
     {
         var regions = new List<Region>();
