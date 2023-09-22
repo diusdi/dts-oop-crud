@@ -14,7 +14,7 @@ public class Program
             Console.WriteLine("2. Country CRUD");
             Console.WriteLine("3. Locations CRUD");
             Console.WriteLine("4. Departments CRUD");
-            Console.WriteLine("5. Join tables regions and countries and locations");
+            Console.WriteLine("5. Employee CRUD");
             Console.WriteLine("10. Exit");
             Console.Write("Enter your choice: ");
             var input = Console.ReadLine();
@@ -37,7 +37,9 @@ public class Program
                 break;
             case "4":
                 DepartmentMenu();
-
+                break;
+            case "5":
+                EmployeeMenu();
                 break;
             case "10":
                 return false;
@@ -190,6 +192,44 @@ public class Program
                     break;
                 case "3":
                     departmentController.Update();
+                    break;
+                case "10":
+                    isLoop = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
+        }
+    }
+
+    public static void EmployeeMenu()
+    {
+        var employee = new Employee();
+        var employeeView = new EmployeeView();
+
+        var employeeController = new EmployeeController(employee, employeeView);
+
+        var isLoop = true;
+        while (isLoop)
+        {
+            Console.WriteLine("1. List all employees");
+            Console.WriteLine("2. Insert new employee");
+            Console.WriteLine("3. Update employee");
+            Console.WriteLine("4. Delete employee");
+            Console.WriteLine("10. Back");
+            Console.Write("Enter your choice: ");
+            var input2 = Console.ReadLine();
+            switch (input2)
+            {
+                case "1":
+                    employeeController.GetAll();
+                    break;
+                case "2":
+                    employeeController.Insert();
+                    break;
+                case "3":
+                    employeeController.Update();
                     break;
                 case "10":
                     isLoop = false;
