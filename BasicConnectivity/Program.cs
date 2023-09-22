@@ -11,7 +11,7 @@ public class Program
         while (choice)
         {
             Console.WriteLine("1. Region CRUD");
-            Console.WriteLine("2. List all countries");
+            Console.WriteLine("2. Country CRUD");
             Console.WriteLine("3. List all locations");
             Console.WriteLine("4. List regions with Where");
             Console.WriteLine("5. Join tables regions and countries and locations");
@@ -30,9 +30,7 @@ public class Program
                 RegionMenu();
                 break;
             case "2":
-                var country = new Country();
-                var countries = country.GetAll();
-                //GeneralView.List(countries, "countries");
+                CountryMenu();
                 break;
             case "3":
                 var location = new Location();
@@ -80,6 +78,44 @@ public class Program
                     break;
                 case "3":
                     regionController.Update();
+                    break;
+                case "10":
+                    isLoop = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
+        }
+    }
+
+    public static void CountryMenu()
+    {
+        var country = new Country();
+        var countryView = new CountryView();
+
+        var countryController = new CountryController(country, countryView);
+
+        var isLoop = true;
+        while (isLoop)
+        {
+            Console.WriteLine("1. List all countries");
+            Console.WriteLine("2. Insert new country");
+            Console.WriteLine("3. Update country");
+            Console.WriteLine("4. Delete country");
+            Console.WriteLine("10. Back");
+            Console.Write("Enter your choice: ");
+            var input2 = Console.ReadLine();
+            switch (input2)
+            {
+                case "1":
+                    countryController.GetAll();
+                    break;
+                case "2":
+                    countryController.Insert();
+                    break;
+                case "3":
+                    countryController.Update();
                     break;
                 case "10":
                     isLoop = false;
