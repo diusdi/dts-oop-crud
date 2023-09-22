@@ -13,7 +13,7 @@ public class Program
             Console.WriteLine("1. Region CRUD");
             Console.WriteLine("2. Country CRUD");
             Console.WriteLine("3. Locations CRUD");
-            Console.WriteLine("4. List regions with Where");
+            Console.WriteLine("4. Departments CRUD");
             Console.WriteLine("5. Join tables regions and countries and locations");
             Console.WriteLine("10. Exit");
             Console.Write("Enter your choice: ");
@@ -36,7 +36,7 @@ public class Program
                 LocationMenu();
                 break;
             case "4":
-                var region2 = new Region();
+                DepartmentMenu();
 
                 break;
             case "10":
@@ -152,6 +152,44 @@ public class Program
                     break;
                 case "3":
                     locationController.Update();
+                    break;
+                case "10":
+                    isLoop = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
+        }
+    }
+
+    public static void DepartmentMenu()
+    {
+        var department = new Department();
+        var departmentView = new DepartmentView();
+
+        var departmentController = new DepartmentController(department, departmentView);
+
+        var isLoop = true;
+        while (isLoop)
+        {
+            Console.WriteLine("1. List all departments");
+            Console.WriteLine("2. Insert new department");
+            Console.WriteLine("3. Update department");
+            Console.WriteLine("4. Delete department");
+            Console.WriteLine("10. Back");
+            Console.Write("Enter your choice: ");
+            var input2 = Console.ReadLine();
+            switch (input2)
+            {
+                case "1":
+                    departmentController.GetAll();
+                    break;
+                case "2":
+                    departmentController.Insert();
+                    break;
+                case "3":
+                    departmentController.Update();
                     break;
                 case "10":
                     isLoop = false;
