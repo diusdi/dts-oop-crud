@@ -12,7 +12,7 @@ public class Program
         {
             Console.WriteLine("1. Region CRUD");
             Console.WriteLine("2. Country CRUD");
-            Console.WriteLine("3. List all locations");
+            Console.WriteLine("3. Locations CRUD");
             Console.WriteLine("4. List regions with Where");
             Console.WriteLine("5. Join tables regions and countries and locations");
             Console.WriteLine("10. Exit");
@@ -33,9 +33,7 @@ public class Program
                 CountryMenu();
                 break;
             case "3":
-                var location = new Location();
-                var locations = location.GetAll();
-                //GeneralView.List(locations, "locations");
+                LocationMenu();
                 break;
             case "4":
                 var region2 = new Region();
@@ -116,6 +114,44 @@ public class Program
                     break;
                 case "3":
                     countryController.Update();
+                    break;
+                case "10":
+                    isLoop = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
+        }
+    }
+
+    public static void LocationMenu()
+    {
+        var location = new Location();
+        var locationView = new LocationView();
+
+        var locationController = new LocationController(location, locationView);
+
+        var isLoop = true;
+        while (isLoop)
+        {
+            Console.WriteLine("1. List all locations");
+            Console.WriteLine("2. Insert new location");
+            Console.WriteLine("3. Update location");
+            Console.WriteLine("4. Delete location");
+            Console.WriteLine("10. Back");
+            Console.Write("Enter your choice: ");
+            var input2 = Console.ReadLine();
+            switch (input2)
+            {
+                case "1":
+                    locationController.GetAll();
+                    break;
+                case "2":
+                    locationController.Insert();
+                    break;
+                case "3":
+                    locationController.Update();
                     break;
                 case "10":
                     isLoop = false;
