@@ -1,5 +1,5 @@
-﻿using System.Data;
-using System.Data.SqlClient;
+﻿using BasicConnectivity.Controllers;
+using BasicConnectivity.Views;
 
 namespace BasicConnectivity;
 
@@ -10,73 +10,84 @@ public class Program
         var choice = true;
         while (choice)
         {
-            Console.WriteLine("1. List Data Employee");
-            Console.WriteLine("2. List Data Departments");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("1. Region CRUD");
+            Console.WriteLine("2. List all countries");
+            Console.WriteLine("3. List all locations");
+            Console.WriteLine("4. List regions with Where");
+            Console.WriteLine("5. Join tables regions and countries and locations");
+            Console.WriteLine("10. Exit");
             Console.Write("Enter your choice: ");
             var input = Console.ReadLine();
             choice = Menu(input);
         }
     }
-    public static bool Menu(string? input)
+
+    public static bool Menu(string input)
     {
-        var employee = new Employee();
-        var department = new Department();
-        var location = new Location();
-        var country = new Country();
-        var region = new Region();
-
-        var getEmployee = employee.GetAll();
-        var getDepartment = department.GetAll();
-        var getLocation = location.GetAll();
-        var getCountry = country.GetAll();
-        var getRegion = region.GetAll();
-
         switch (input)
         {
             case "1":
-
-                var resultEmployeeJoin = (from e in getEmployee
-                                          join d in getDepartment on e.DepartmentId equals d.Id
-                                          join l in getLocation on d.LocationId equals l.Id
-                                          join c in getCountry on l.CountryId equals c.Id
-                                          join r in getRegion on c.RegionId equals r.Id
-                                          select new EmployeeVM
-                                          {
-                                              Id = e.Id,
-                                              FullName = e.FullName,
-                                              Email = e.Email,
-                                              PhoneNumber = e.PhoneNumber,
-                                              Salary = e.Salary,
-                                              DepartmentName = d.Name,
-                                              StreetAddress = l.StreetAddress,
-                                              CountryName = c.Name,
-                                              RegionName = r.Name,
-
-                                          }).ToList();
-                GeneralMenu.List(resultEmployeeJoin, "Employee");
+                RegionMenu();
                 break;
             case "2":
-                var resultDepartmenJoin = (from e in getEmployee
-                                          join d in getDepartment on e.DepartmentId equals d.Id
-                                          group e by d.Name into departmentGroup
-                                          where departmentGroup.Count() > 3
-                                          select new DepartmentVM
-                                          {
-                                              DepartmentName = departmentGroup.Key,
-                                              TotalEmployee = departmentGroup.Count(),
-                                              MinSalary = departmentGroup.Min(e => e.Salary),
-                                              MaxSalary = departmentGroup.Max(e => e.Salary),
-                                              AverageSalary = departmentGroup.Average(e => e.Salary)
-                                          }).ToList();
-                GeneralMenu.List(resultDepartmenJoin, "Department");
+                var country = new Country();
+                var countries = country.GetAll();
+                //GeneralView.List(countries, "countries");
                 break;
             case "3":
+                var location = new Location();
+                var locations = location.GetAll();
+                //GeneralView.List(locations, "locations");
+                break;
+            case "4":
+                var region2 = new Region();
+
+                break;
+            case "10":
                 return false;
             default:
                 Console.WriteLine("Invalid choice");
                 break;
         }
+
         return true;
+    }
+
+    public static void RegionMenu()
+    {
+        var region = new Region();
+        var regionView = new RegionView();
+
+        var regionController = new RegionController(region, regionView);
+
+        var isLoop = true;
+        while (isLoop)
+        {
+            Console.WriteLine("1. List all regions");
+            Console.WriteLine("2. Insert new region");
+            Console.WriteLine("3. Update region");
+            Console.WriteLine("4. Delete region");
+            Console.WriteLine("10. Back");
+            Console.Write("Enter your choice: ");
+            var input2 = Console.ReadLine();
+            switch (input2)
+            {
+                case "1":
+                    regionController.GetAll();
+                    break;
+                case "2":
+                    regionController.Insert();
+                    break;
+                case "3":
+                    regionController.Update();
+                    break;
+                case "10":
+                    isLoop = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
+        }
     }
 }
